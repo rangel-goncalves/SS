@@ -7,7 +7,6 @@ package com.mycompany.inventario.view;
 import com.mycompany.inventario.OpenTable;
 import com.mycompany.inventario.home;
 import com.mycompany.inventario.Line;
-import com.mycompany.inventario.Planilha;
 import java.util.ArrayList;
 
 /**
@@ -144,7 +143,7 @@ public class Busca extends javax.swing.JFrame {
         String PN = this.textPN1.getText();
         String res = "";
         for (int i = 0; i < this.home.numArquivos; i++) {
-                for (Planilha lin : this.home.arquivos.get(i)) {
+                for (Line lin : this.home.arquivos.get(i)) {
                     String s = lin.L.get("Manufacturer Part Number 1");
                     if(s == null){
                         continue;
