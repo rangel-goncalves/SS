@@ -23,7 +23,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  * @author range
  */
 public class OpenTable {
-    public static ArrayList<Line> openFile(){
+    public static Planilha openFile(){
         HashMap<Integer,String> map = new HashMap<>();
         HashMap<String, String> L = new HashMap<>();
         ArrayList<Line> P = new ArrayList();
@@ -95,12 +95,12 @@ public class OpenTable {
                         }
                     }
                     //System.out.println("");
-                    Line p = new Line(L, selectedFile.getName());
+                    Line p = new Line(L);
                     P.add(p);
                     
                 }
                 System.out.println(selectedFile.getName()+" adivionado a lista");
-                return P;
+                return new Planilha(P, selectedFile.getName());
 
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(Inventario.class.getName()).log(Level.SEVERE, null, ex);
@@ -111,6 +111,6 @@ public class OpenTable {
             System.out.println("Nenhum arquivo selecionado.");
             return null;
         }
-        return P;
+        return null;
     }
 }

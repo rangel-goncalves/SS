@@ -13,6 +13,7 @@ public class Planilha {
 
     public Planilha(ArrayList<Line> lines, String name) {
         this.lines = lines;
+        this.name =  name;
     }
 
     public String getName() {

@@ -4,6 +4,7 @@
 
 package com.mycompany.inventario;
 
+import com.mycompany.inventario.view.Busca;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
@@ -29,6 +30,9 @@ public class Inventario {
     static final int numMaxarq = 3;
     public static void main(String[] args) {
         
+        Busca b = new Busca();
+        b.setVisible(true);
+        /*
         int numArquivos = 0;
         Hashtable<Integer,ArrayList<Line>> arquivos = new Hashtable<>();
         /*
@@ -36,6 +40,7 @@ public class Inventario {
         HashMap<Integer, String> L = new HashMap<>();
         ArrayList<planilha> P = new ArrayList();
         */
+        /*
         arquivos.put(numArquivos,OpenTable.openFile());
         numArquivos ++;
         Scanner scanner = new Scanner(System.in);
@@ -69,5 +74,6 @@ public class Inventario {
             }
            
         }
+        */
     }
 }

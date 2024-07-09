@@ -7,6 +7,7 @@ package com.mycompany.inventario.view;
 import com.mycompany.inventario.OpenTable;
 import com.mycompany.inventario.home;
 import com.mycompany.inventario.Line;
+import com.mycompany.inventario.Planilha;
 import java.util.ArrayList;
 
 /**
@@ -142,15 +143,16 @@ public class Busca extends javax.swing.JFrame {
         // TODO add your handling code here:
         String PN = this.textPN1.getText();
         String res = "";
+
         for (int i = 0; i < this.home.numArquivos; i++) {
-                for (Line lin : this.home.arquivos.get(i)) {
+                for (Line lin : this.home.arquivos.get(i).lines) {
                     String s = lin.L.get("Manufacturer Part Number 1");
                     if(s == null){
                         continue;
                     } 
                     if(s.equalsIgnoreCase(PN)){
-                        System.out.println(lin.L.get("Value")+ " ---> projeto: "+ lin.getName());
-                        res += lin.L.get("Value")+ " ---> projeto: "+ lin.getName()+"\n";
+                        System.out.println(lin.L.get("Value")+ " ---> projeto: "+ this.home.arquivos.get(i).getName());
+                        res += lin.L.get("Value")+ " ---> projeto: "+ this.home.arquivos.get(i).getName()+"\n";
                         break;
                     }
                 }
@@ -165,16 +167,16 @@ public class Busca extends javax.swing.JFrame {
     private void jBtnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnAddActionPerformed
         // TODO add your handling code here:
         home.arquivos.put(home.numArquivos,OpenTable.openFile());
+        this.list1.add(home.arquivos.get(home.numArquivos).getName());
         home.numArquivos ++;
-        this.list1.add("aqui");
     }//GEN-LAST:event_jBtnAddActionPerformed
 
     private void list1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_list1MouseClicked
         // TODO add your handling code here:
         this.list1.getSelectedIndex();
-        ArrayList<Line> p = this.home.arquivos.get(this.list1.getSelectedIndex());
-        System.out.println(p.size());
-        System.out.println(p.get(1).name);
+        //ArrayList<Line> p = this.home.arquivos.get(this.list1.getSelectedIndex());
+        //System.out.println(p.size());
+        //System.out.println(p.get(1).name);
     }//GEN-LAST:event_list1MouseClicked
 
     /**

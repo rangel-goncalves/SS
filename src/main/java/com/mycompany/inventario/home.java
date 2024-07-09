@@ -10,7 +10,7 @@ import java.util.Hashtable;
 public class home {
     public static final int numMaxarq = 3;
     public int numArquivos;
-    public Hashtable<Integer,ArrayList<Line>> arquivos = new Hashtable<>();
+    public Hashtable<Integer,Planilha> arquivos = new Hashtable<>();
 
     public home() {
         this.arquivos = new Hashtable<>();

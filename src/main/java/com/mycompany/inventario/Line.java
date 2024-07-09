@@ -11,13 +11,11 @@ import java.util.Map;
 public class Line {
     
     public HashMap<String, String> L;
-    public String name ="";
     public HashMap<String, Integer> Cabecalho;
     
-    public Line(HashMap<String, String> l, String name){
+    public Line(HashMap<String, String> l){
         Cabecalho = new HashMap<>();
         this.L = new HashMap<>();
-        this.name =  name;
         /*
         for (Map.Entry<Integer, String> entry : l.entrySet()) {
             System.out.println(entry.getKey());
@@ -30,8 +28,4 @@ public class Line {
         //System.out.println(this.L.get("Manufacturer Part Number 1")+"<<- ");
     }
 
-    public String getName() {
-        return name;
-    }
-    
 }
