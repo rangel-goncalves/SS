@@ -45,7 +45,6 @@ public class OpenTable {
                 XSSFSheet planilha = old_file.getSheetAt(0);
 
                 Iterator<Row> linhas = planilha.iterator();
-
                 int i = 0;
                 Row row = linhas.next();
                 Iterator<Cell> cellColum = row.cellIterator();
@@ -55,20 +54,19 @@ public class OpenTable {
                         String valorString = cell.getStringCellValue();
                         map.put(i,valorString);
                         i++;
-                        //System.out.println(valorString);
+                        System.out.println(valorString);
                     } else if (cell.getCellType() == CellType.NUMERIC) {
-                        double valorNumerico = cell.getNumericCellValue();
-                        map.put(i,""+valorNumerico);
+                        // Aqui pode dar algum erro caso o numero realmente precise ser um double, mas como quantidade e posição não vai ser nunca(eu acho) não tem problem
+                        Integer valorNumerico = (int)cell.getNumericCellValue();
+                        map.put(i,valorNumerico.toString());
                         i++;
-                        //System.out.println(valorNumerico);
+                        System.out.println(valorNumerico);
                     } else {
                         map.put(i,""+cell.getCellType());
                         i++;
-                        //System.out.println(cell.getCellType());
+                        System.out.println(cell.getCellType()+" aqui");
                     }
                 }
-                
-                
                 //System.out.println("aqui"+map.get("Manufacturer Part Number 1"));
                 
                 while (linhas.hasNext()) {
@@ -84,7 +82,8 @@ public class OpenTable {
                             i++;
                             //System.out.print(L.get(i-1)+" ");
                         } else if (cell.getCellType() == CellType.NUMERIC) {
-                            Double valorNumerico = cell.getNumericCellValue();
+                            // Aqui pode dar algum erro caso o numero realmente precise ser um double, mas como quantidade e posição não vai ser nunca(eu acho) não tem problem
+                            Integer valorNumerico = (int)cell.getNumericCellValue();
                             L.put(map.get(i),valorNumerico.toString());
                             i++;
                             //System.out.print(L.get(i-1)+" ");
@@ -99,7 +98,7 @@ public class OpenTable {
                     P.add(p);
                     
                 }
-                System.out.println(selectedFile.getName()+" adivionado a lista");
+                //System.out.println(selectedFile.getName()+" adivionado a lista");
                 return new Planilha(P, selectedFile.getName());
 
             } catch (FileNotFoundException ex) {

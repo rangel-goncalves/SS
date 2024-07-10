@@ -68,7 +68,7 @@ public class Busca extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTextResult, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTextResult, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -90,7 +90,7 @@ public class Busca extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(list1, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
+                .addComponent(list1, javax.swing.GroupLayout.DEFAULT_SIZE, 197, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -143,7 +143,7 @@ public class Busca extends javax.swing.JFrame {
         // TODO add your handling code here:
         String PN = this.textPN1.getText();
         String res = "";
-
+        
         for (int i = 0; i < this.home.numArquivos; i++) {
                 for (Line lin : this.home.arquivos.get(i).lines) {
                     String s = lin.L.get("Manufacturer Part Number 1");
@@ -166,7 +166,7 @@ public class Busca extends javax.swing.JFrame {
 
     private void jBtnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnAddActionPerformed
         // TODO add your handling code here:
-        home.arquivos.put(home.numArquivos,OpenTable.openFile());
+        this.home.arquivos.put(home.numArquivos,OpenTable.openFile());
         this.list1.add(home.arquivos.get(home.numArquivos).getName());
         home.numArquivos ++;
     }//GEN-LAST:event_jBtnAddActionPerformed
@@ -174,6 +174,9 @@ public class Busca extends javax.swing.JFrame {
     private void list1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_list1MouseClicked
         // TODO add your handling code here:
         this.list1.getSelectedIndex();
+        TableView tblView = new TableView();
+        tblView.importBOM(this.home.arquivos.get(this.list1.getSelectedIndex()));
+        tblView.setVisible(true);
         //ArrayList<Line> p = this.home.arquivos.get(this.list1.getSelectedIndex());
         //System.out.println(p.size());
         //System.out.println(p.get(1).name);
