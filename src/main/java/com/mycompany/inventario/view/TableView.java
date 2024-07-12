@@ -40,7 +40,6 @@ public class TableView extends javax.swing.JFrame {
         if(p.lines.get(0).L.containsKey("BLANK")){
             jTableBOM.removeColumn(jTableBOM.getColumn("BLANK"));
         }
-        
         for (Line line : p.lines) {
             int i = 0;
             ArrayList<String> s = new ArrayList();
@@ -99,7 +98,7 @@ public class TableView extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
         );
 
         pack();

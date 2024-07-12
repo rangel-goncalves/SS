@@ -39,6 +39,7 @@ public class Busca extends javax.swing.JFrame {
         textPN1 = new java.awt.TextField();
         jPanel1 = new javax.swing.JPanel();
         jTextResult = new java.awt.TextArea();
+        listEscolha = new java.awt.List();
         jPanel2 = new javax.swing.JPanel();
         list1 = new java.awt.List();
 
@@ -62,26 +63,41 @@ public class Busca extends javax.swing.JFrame {
             }
         });
 
+        listEscolha.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                listEscolhaMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTextResult, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(listEscolha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jTextResult, javax.swing.GroupLayout.DEFAULT_SIZE, 425, Short.MAX_VALUE))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jTextResult, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(122, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(listEscolha, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         list1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 list1MouseClicked(evt);
+            }
+        });
+        list1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                list1ActionPerformed(evt);
             }
         });
 
@@ -90,7 +106,7 @@ public class Busca extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(list1, javax.swing.GroupLayout.DEFAULT_SIZE, 197, Short.MAX_VALUE)
+                .addComponent(list1, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -133,7 +149,7 @@ public class Busca extends javax.swing.JFrame {
                         .addGap(25, 25, 25)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(118, Short.MAX_VALUE))
+                .addContainerGap(71, Short.MAX_VALUE))
         );
 
         pack();
@@ -145,19 +161,33 @@ public class Busca extends javax.swing.JFrame {
         String res = "";
         
         for (int i = 0; i < this.home.numArquivos; i++) {
-                for (Line lin : this.home.arquivos.get(i).lines) {
-                    String s = lin.L.get("Manufacturer Part Number 1");
-                    if(s == null){
-                        continue;
-                    } 
-                    if(s.equalsIgnoreCase(PN)){
-                        System.out.println(lin.L.get("Value")+ " ---> projeto: "+ this.home.arquivos.get(i).getName());
-                        res += lin.L.get("Value")+ " ---> projeto: "+ this.home.arquivos.get(i).getName()+"\n";
-                        break;
+            boolean add = true;
+            for (Line lin : this.home.arquivos.get(i).lines) {
+                String s = lin.L.get("Manufacturer Part Number 1");
+                if(s == null){
+                    continue;
+                } 
+                if(s.equalsIgnoreCase(PN)){
+                    //System.out.println(lin.L.get("Value")+ " ---> projeto: "+ this.home.arquivos.get(i).getName());
+                    //System.out.println(this.listEscolha.getItemCount());
+                    if(this.listEscolha.getItemCount() != 0){
+                        for (int j = 0; j < (this.listEscolha.getItemCount()); j++) {
+                            //System.out.println(this.listEscolha.getItem(j));
+                            if(this.listEscolha.getItem(j).contains(lin.L.get("Value")+ " >"+lin.L.get("null")+ " >"+ this.home.arquivos.get(i).getName())){
+                                add = false;
+                                //System.out.println(this.listEscolha.getItem(j));
+                            }
+                        }
                     }
+                    if(add){
+                        this.listEscolha.add(lin.L.get("Value")+ " >"+lin.L.get("null")+ " >"+ this.home.arquivos.get(i).getName());
+                        res += lin.L.get("Value")+ " >" + lin.L.get("null")+ " >" + this.home.arquivos.get(i).getName()+"\n";
+                        this.jTextResult.setText(res);
+                        break;
+                    }  
                 }
             }
-        this.jTextResult.setText(res);
+        }
     }//GEN-LAST:event_textPN1KeyReleased
 
     private void textPN1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textPN1ActionPerformed
@@ -170,10 +200,10 @@ public class Busca extends javax.swing.JFrame {
         this.list1.add(home.arquivos.get(home.numArquivos).getName());
         home.numArquivos ++;
     }//GEN-LAST:event_jBtnAddActionPerformed
-
+    
     private void list1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_list1MouseClicked
         // TODO add your handling code here:
-        this.list1.getSelectedIndex();
+        //this.list1.getSelectedIndex();
         TableView tblView = new TableView();
         tblView.importBOM(this.home.arquivos.get(this.list1.getSelectedIndex()));
         tblView.setVisible(true);
@@ -181,6 +211,23 @@ public class Busca extends javax.swing.JFrame {
         //System.out.println(p.size());
         //System.out.println(p.get(1).name);
     }//GEN-LAST:event_list1MouseClicked
+
+    private void list1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_list1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_list1ActionPerformed
+
+    private void listEscolhaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listEscolhaMouseClicked
+        // TODO add your handling code here:
+        String[] s = this.listEscolha.getItem(this.listEscolha.getSelectedIndex()).split(" >", 3);
+        for (String string : s) {
+            System.out.println(string);  
+        }
+        for (int i = 0; i < this.home.numArquivos; i++) {
+            if(this.home.arquivos.get(i).getName().equals(s[2])){
+                this.home.arquivos.get(i).lines.get(Integer.parseInt(s[1])).L.put("Placed", "OK");
+            }
+        }
+    }//GEN-LAST:event_listEscolhaMouseClicked
 
     /**
      * @param args the command line arguments
@@ -223,6 +270,7 @@ public class Busca extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private java.awt.TextArea jTextResult;
     private java.awt.List list1;
+    private java.awt.List listEscolha;
     private java.awt.TextField textPN1;
     // End of variables declaration//GEN-END:variables
 }
