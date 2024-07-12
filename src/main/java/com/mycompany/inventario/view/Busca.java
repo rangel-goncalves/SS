@@ -173,15 +173,16 @@ public class Busca extends javax.swing.JFrame {
                     if(this.listEscolha.getItemCount() != 0){
                         for (int j = 0; j < (this.listEscolha.getItemCount()); j++) {
                             //System.out.println(this.listEscolha.getItem(j));
-                            if(this.listEscolha.getItem(j).contains(lin.L.get("Value")+ " >"+lin.L.get("null")+ " >"+ this.home.arquivos.get(i).getName())){
+                            if(this.listEscolha.getItem(j).contains(lin.L.get("Value")+ " > "+lin.L.get("null")+ " > "+ this.home.arquivos.get(i).getName())){
                                 add = false;
                                 //System.out.println(this.listEscolha.getItem(j));
                             }
                         }
                     }
                     if(add){
-                        this.listEscolha.add(lin.L.get("Value")+ " >"+lin.L.get("null")+ " >"+ this.home.arquivos.get(i).getName());
-                        res += lin.L.get("Value")+ " >" + lin.L.get("null")+ " >" + this.home.arquivos.get(i).getName()+"\n";
+                        this.placed = false;
+                        this.listEscolha.add(lin.L.get("Value")+ " > "+lin.L.get("null")+ " > "+ this.home.arquivos.get(i).getName());
+                        res += lin.L.get("Value")+ " > " + lin.L.get("null")+ " > " + this.home.arquivos.get(i).getName()+"\n";
                         this.jTextResult.setText(res);
                         break;
                     }  
@@ -216,14 +217,17 @@ public class Busca extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_list1ActionPerformed
 
+    boolean placed;
+    
     private void listEscolhaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listEscolhaMouseClicked
         // TODO add your handling code here:
-        String[] s = this.listEscolha.getItem(this.listEscolha.getSelectedIndex()).split(" >", 3);
+        String[] s = this.listEscolha.getItem(this.listEscolha.getSelectedIndex()).split(" > ", 3);
         for (String string : s) {
             System.out.println(string);  
         }
         for (int i = 0; i < this.home.numArquivos; i++) {
-            if(this.home.arquivos.get(i).getName().equals(s[2])){
+            if(this.home.arquivos.get(i).getName().equals(s[2]) && !this.placed){
+                this.placed = true;
                 this.home.arquivos.get(i).lines.get(Integer.parseInt(s[1])).L.put("Placed", "OK");
             }
         }
